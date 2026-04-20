@@ -51,9 +51,12 @@ FILE_SIZE=$(stat -f%z "${WALLPAPER_PATH}.tmp" 2>/dev/null || echo 0)
 if [ "$FILE_SIZE" -gt 100000 ]; then
     mv "${WALLPAPER_PATH}.tmp" "$WALLPAPER_PATH"
 
-    # Set as wallpaper on all desktops
-    osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${WALLPAPER_PATH}\""
-    osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${WALLPAPER_PATH}\""
+    # Set as wallpaper (desktoppr if available, fallback to osascript)
+    if command -v desktoppr &>/dev/null; then
+        desktoppr "${WALLPAPER_PATH}"
+    else
+        osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${WALLPAPER_PATH}\""
+    fi
 
     echo "[DailyPaper] Wallpaper updated: $(date)"
 else
