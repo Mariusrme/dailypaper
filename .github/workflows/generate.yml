@@ -1,0 +1,38 @@
+name: Generate Daily Wallpaper
+
+on:
+  schedule:
+    # Every day at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install Pillow numpy
+
+      - name: Generate wallpaper
+        run: python generate.py output/wallpaper.png
+
+      - name: Commit and push
+        run: |
+          git config user.name "DailyPaper Bot"
+          git config user.email "bot@dailypaper"
+          mkdir -p output
+          git add output/wallpaper.png
+          git diff --cached --quiet || git commit -m "wallpaper: $(date -u +%Y-%m-%d)"
+          git push
