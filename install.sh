@@ -53,6 +53,7 @@ if [ "$FILE_SIZE" -gt 100000 ]; then
 
     # Set as wallpaper on all desktops
     osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${WALLPAPER_PATH}\""
+    osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${WALLPAPER_PATH}\""
 
     echo "[DailyPaper] Wallpaper updated: $(date)"
 else
