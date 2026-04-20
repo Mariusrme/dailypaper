@@ -6,7 +6,7 @@
 
 set -e
 
-REPO="Mariusrme/dailypaper"  # <-- Change this to your GitHub username/repo
+REPO="Mariusrme/dailypaper"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 WALLPAPER_URL="${RAW_BASE}/output/wallpaper.png"
