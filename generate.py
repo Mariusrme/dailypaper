@@ -9,7 +9,8 @@ import numpy as np
 import random
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 def hex_to_rgb(hex_color):
@@ -97,8 +98,8 @@ PHRASES = [
 def generate_wallpaper(width=3024, height=1964, output_path="wallpaper.png"):
     """Generate today's wallpaper. Deterministic: same date = same output worldwide."""
 
-    # UTC date as seed — same for everyone on the planet
-    today = datetime.now(timezone.utc)
+    # Montreal timezone — wallpaper matches local date
+    today = datetime.now(ZoneInfo("America/Montreal"))
     day_of_year = today.timetuple().tm_yday
     year = today.year
     seed = year * 1000 + day_of_year

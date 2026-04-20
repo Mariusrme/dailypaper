@@ -2,8 +2,8 @@ name: Generate Daily Wallpaper
 
 on:
   schedule:
-    # Every day at midnight UTC
-    - cron: '0 0 * * *'
+    # Every day at 5 AM UTC (midnight/1 AM Montreal depending on DST)
+    - cron: '0 5 * * *'
   workflow_dispatch: # Manual trigger
 
 permissions:
