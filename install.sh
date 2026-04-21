@@ -33,7 +33,8 @@ cat > "$SCRIPT_PATH" << 'UPDATESCRIPT'
 # DailyPaper — Fetch today's wallpaper and set it
 
 INSTALL_DIR="$HOME/.dailypaper"
-WALLPAPER_PATH="$INSTALL_DIR/wallpaper.png"
+TODAY=$(date +%Y-%m-%d)
+WALLPAPER_PATH="$INSTALL_DIR/wallpaper-${TODAY}.png"
 UPDATESCRIPT
 
 # Inject the URL (not single-quoted so it expands)
@@ -50,6 +51,9 @@ curl -sL "$WALLPAPER_URL" -o "${WALLPAPER_PATH}.tmp"
 FILE_SIZE=$(stat -f%z "${WALLPAPER_PATH}.tmp" 2>/dev/null || echo 0)
 if [ "$FILE_SIZE" -gt 100000 ]; then
     mv "${WALLPAPER_PATH}.tmp" "$WALLPAPER_PATH"
+
+    # Clean up old wallpapers (keep only today's)
+    find "$INSTALL_DIR" -name "wallpaper-*.png" ! -name "wallpaper-${TODAY}.png" -delete 2>/dev/null
 
     # Set as wallpaper (desktoppr if available, fallback to osascript)
     if command -v desktoppr &>/dev/null; then
