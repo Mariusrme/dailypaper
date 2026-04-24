@@ -12,14 +12,14 @@ Open Terminal, paste this, done:
 curl -sL https://raw.githubusercontent.com/Mariusrme/dailypaper/main/install.sh | bash
 ```
 
-Your wallpaper updates automatically every morning at 6 AM and at every login.
+Your wallpaper updates automatically every morning at 7 AM and at every login.
 
 > **Tip:** Go to System Settings → Wallpaper and enable "Show on all Desktops" so it applies to all your Spaces.
 
 ## How it works
 
 1. A GitHub Action runs daily and generates a wallpaper image (Python + Pillow)
-2. The image is committed to this repo (`output/wallpaper.png`)
+2. The image is committed to this repo (`output/wallpaper.jpg`)
 3. Your Mac fetches it via `launchd` — no background app, no CPU usage
 4. The wallpaper is set natively via `desktoppr` or `osascript`
 

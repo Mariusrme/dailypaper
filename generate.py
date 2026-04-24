@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 DailyPaper — Generate today's wallpaper.
-Same seed for everyone, same wallpaper worldwide.
+Deterministic per day in America/Montreal timezone.
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -188,7 +188,7 @@ def generate_wallpaper(width=3024, height=1964, output_path="wallpaper.png"):
     # Composite and save
     img = Image.alpha_composite(img, overlay)
     img = img.convert("RGB")
-    img.save(output_path, "PNG", quality=95)
+    img.save(output_path, "JPEG", quality=92, optimize=True, progressive=True)
 
     print(f"[DailyPaper] Saved: {output_path}")
     print(f"[DailyPaper] {width}x{height} | {palette[0]} -> {palette[1]} | {day} {month} | \"{phrase}\"")
